@@ -20,6 +20,7 @@ require 'sprockets/railtie'
 Bundler.require(*Rails.groups)
 
 module TwitterCloneRubyGql
+  # @note: Application class
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
