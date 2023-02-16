@@ -4,6 +4,10 @@
 
 This is a GraphQL API for twitter clone. It is built with Ruby on Rails and GraphQL (Free). It is created by [Sulman Baig](https://sulmanweb.com).
 
+# Agile Board
+
+- [Agile Board](https://github.com/users/sulmanweb/projects/5)
+
 # License
 
 [MIT LICENSE](LICENSE)
