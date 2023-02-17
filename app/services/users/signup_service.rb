@@ -9,8 +9,12 @@ module Users
   #   Users::SignupService.call(username: 'username', email: 'email', password: 'password', name: 'name')
   # @example result
   #   result.user # => User
-  #   result.session # => Session
+  #   result.auth_token # => String
   #   result.errors # => Array
+  # @step: 1 - Validate the user.
+  # @step: 2 - Create the user and the session.
+  # @step: 3 - Encode the session token.
+  # @step: 4 - Return the result.
   class SignupService
     attr_accessor :username, :email, :password, :name, :result
 
@@ -21,11 +25,11 @@ module Users
       @password = password
       @name = name
       # @note: This is the struct that will be used to return the result of the service.
-      @result = Struct.new(:user, :session, :errors)
+      @result = Struct.new(:user, :auth_token, :errors)
     end
 
     # @note: This is the method that will be called to execute the service.
-    def call
+    def call # rubocop:disable Metrics/AbcSize
       session = nil
       user = User.new(username:, email:, password:, name:)
       # @note: This is the validation of the user.
@@ -36,7 +40,10 @@ module Users
         user.save!
         session = user.sessions.create!
       end
-      result.new(user, session, nil)
+      auth_token = "Bearer #{JsonWebToken.encode({ token: session.token })}"
+      result.new(user, auth_token, nil)
+    rescue StandardError => e
+      result.new(nil, nil, [e.message])
     end
 
     class << self

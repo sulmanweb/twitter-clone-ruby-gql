@@ -55,3 +55,5 @@ gem 'graphiql-rails', github: 'spicotech/graphiql-rails'
 gem 'graphql', '~> 2.0', '>= 2.0.17'
 gem 'graphql-rails_logger', '~> 1.2', '>= 1.2.4'
 gem 'sass-rails', '~> 6.0'
+
+gem 'jwt', '~> 2.7'
