@@ -14,7 +14,7 @@ RSpec.describe Users::SignupService do
         )
 
         expect(result.user).to be_a(User)
-        expect(result.session).to be_a(Session)
+        expect(result.auth_token).to be_a(String)
         expect(result.errors).to be_nil
       end
     end
@@ -31,7 +31,7 @@ RSpec.describe Users::SignupService do
         )
 
         expect(result.user).to be_nil
-        expect(result.session).to be_nil
+        expect(result.auth_token).to be_nil
         expect(result.errors).to be_a(Array)
       end
     end
