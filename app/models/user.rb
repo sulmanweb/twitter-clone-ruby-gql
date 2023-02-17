@@ -23,6 +23,9 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :profile_picture
 
+  # @note: Relations
+  has_many :sessions, dependent: :destroy
+
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
                        format: { with: /\A[a-z0-9_.]+\z/, message: I18n.t('models.user.username_format') }

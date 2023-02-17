@@ -27,6 +27,10 @@ RSpec.describe User, type: :model do
     expect(user).to be_valid
   end
 
+  describe 'ActiveRecord associations' do
+    it { is_expected.to have_many(:sessions).dependent(:destroy) }
+  end
+
   describe 'ActiveModel validations' do
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_presence_of(:username) }
