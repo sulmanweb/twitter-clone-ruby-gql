@@ -4,7 +4,7 @@ module Users
   # @param [String] email
   # @param [String] password
   # @param [String] name
-  # @return [Struct] result with the user, session and error
+  # @return [Struct] result with the user, auth token and error
   # @example
   #   Users::SignupService.call(username: 'username', email: 'email', password: 'password', name: 'name')
   # @example result
