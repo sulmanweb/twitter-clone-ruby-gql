@@ -17,3 +17,5 @@ RSpec/ExampleLength:
   Enabled: false
 GraphQL/ExtractInputType:
   Enabled: false
+GraphQL/ExtractType:
+  Enabled: false
