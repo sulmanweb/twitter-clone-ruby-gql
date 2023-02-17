@@ -1,10 +1,8 @@
 module Types
+  # @note: This is the type that will be used to represent a mutation.
   class MutationType < Types::BaseObject
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World"
-    end
+    description 'The mutation root of this schema'
+
+    field :sign_up, mutation: Mutations::SignUp, description: 'Sign up a new user'
   end
 end
