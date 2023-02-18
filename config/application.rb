@@ -45,7 +45,7 @@ module TwitterCloneRubyGql
                        routing_specs: false,
                        controller_specs: false
     end
-    config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('lib')
 
     # Cookies store for graphiql
     config.middleware.use ActionDispatch::Cookies
