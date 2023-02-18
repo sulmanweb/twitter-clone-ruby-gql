@@ -7,6 +7,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'db/schema.rb'
+    - vendor/bundle/**/*
 RSpec/FilePath:
   Enabled: false
 RSpec/Rails/InferredSpecType:

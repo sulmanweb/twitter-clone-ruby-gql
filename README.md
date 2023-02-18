@@ -1,5 +1,7 @@
 # README
 
+[![Ruby on Rails CI](https://github.com/sulmanweb/twitter-clone-ruby-gql/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/sulmanweb/twitter-clone-ruby-gql/actions/workflows/rubyonrails.yml)
+
 # About
 
 This is a GraphQL API for twitter clone. It is built with Ruby on Rails and GraphQL (Free). It is created by [Sulman Baig](https://sulmanweb.com).

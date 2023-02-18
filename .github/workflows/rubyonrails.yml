@@ -1,0 +1,84 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      api-dir: ./
+
+    services:
+      postgres:
+        image: postgres
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_DB: twitter_clone_ruby_gql_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.0
+          bundler-cache: true
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
+      - name: Setup Database
+        working-directory: ${{env.api-dir}}
+        run: bin/rails db:create db:schema:load
+      - name: Build and test with rspec
+        working-directory: ${{env.api-dir}}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: bundle exec rspec spec
+
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      api-dir: ./
+
+    services:
+      postgres:
+        image: postgres
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_DB: twitter_clone_ruby_gql_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.0
+          bundler-cache: true
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
+      - name: Setup Database
+        working-directory: ${{env.api-dir}}
+        run: bin/rails db:create db:schema:load
+      - name: Check Rubocop Styles
+        working-directory: ${{env.api-dir}}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: bundle exec rubocop
