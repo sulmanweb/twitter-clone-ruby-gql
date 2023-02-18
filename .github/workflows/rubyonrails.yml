@@ -38,11 +38,6 @@ jobs:
           bundler-cache: true
       - name: Install PostgreSQL
         run: sudo apt-get -yqq install libpq-dev
-      - name: Run bundle install
-        working-directory: ${{env.api-dir}}
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
       - name: Setup Database
         working-directory: ${{env.api-dir}}
         run: bin/rails db:create db:schema:load
@@ -79,11 +74,6 @@ jobs:
           bundler-cache: true
       - name: Install PostgreSQL
         run: sudo apt-get -yqq install libpq-dev
-      - name: Run bundle install
-        working-directory: ${{env.api-dir}}
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
       - name: Setup Database
         working-directory: ${{env.api-dir}}
         run: bin/rails db:create db:schema:load
