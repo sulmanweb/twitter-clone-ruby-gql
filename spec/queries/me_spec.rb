@@ -38,7 +38,7 @@ RSpec.describe Queries::Me, type: :request do
       post('/graphql', params: { query: })
       result = JSON.parse(response.body, symbolize_names: true)
 
-      expect(result[:data][:me][:errors]).to eq(['You are not logged in'])
+      expect(result[:data][:me][:errors]).to eq(['You are not logged in.'])
       expect(result[:data][:me][:success]).to be_falsey
       expect(result[:data][:me][:user]).to be_nil
     end
