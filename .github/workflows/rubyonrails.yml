@@ -39,7 +39,7 @@ jobs:
         run: bin/rails db:schema:load
       # Add or replace test runners here
       - name: Run tests
-        run: rspec spec
+        run: bundle exec rspec spec
 
   lint:
     runs-on: ubuntu-latest
@@ -53,4 +53,4 @@ jobs:
           bundler-cache: true
       # Add or replace any other lints here
       - name: Lint Ruby files
-        run: rubocop
+        run: bundle exec rubocop
