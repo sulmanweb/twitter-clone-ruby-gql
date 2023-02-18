@@ -52,16 +52,47 @@ jobs:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
         run: bundle exec rspec spec
 
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v3
-  #     - name: Install Ruby and gems
-  #       uses: ruby/setup-ruby@v1 # v1.127.0
-  #       with:
-  #         ruby-version: '3.2.0'
-  #         bundler-cache: true
-  #     # Add or replace any other lints here
-  #     - name: Lint Ruby files
-  #       run: bundle exec rubocop
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      api-dir: ./
+
+    services:
+      postgres:
+        image: postgres
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_DB: twitter_clone_ruby_gql_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      
+      redis:
+        image: redis:alpine
+        ports: ["6379:6379"]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.0
+          bundler-cache: true
+      - name: Install PostgreSQL
+        run: sudo apt-get -yqq install libpq-dev
+      - name: Run bundle install
+        working-directory: ${{env.api-dir}}
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: Setup Database
+        working-directory: ${{env.api-dir}}
+        run: bin/rails db:create db:schema:load
+      - name: Check Rubocop Styles
+        working-directory: ${{env.api-dir}}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: bundle exec rubocop
