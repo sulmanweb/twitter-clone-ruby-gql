@@ -357,7 +357,7 @@
 									"top": 469,
 									"width": 216.3544921875,
 									"height": 13,
-									"text": "Follower"
+									"text": "Follow"
 								},
 								{
 									"_type": "ERDColumnCompartmentView",
@@ -4988,7 +4988,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFLzntJC6EktCk="
 					},
-					"name": "Follower",
+					"name": "Follow",
 					"documentation": "This table would essentially be a many-to-many relationship between users, where each row represents a single user following another user. You would use this table to keep track of who is following whom, and you could use this information to display a user's followers and the users they are following.\n\nUnique between user_id and flollowing_user_id",
 					"columns": [
 						{
@@ -5008,7 +5008,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGGTUnT+ZjfASM="
 							},
-							"name": "user_id",
+							"name": "follower_id",
 							"type": "INTEGER",
 							"length": 0,
 							"foreignKey": true,
@@ -5022,7 +5022,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGGTUnT+ZjfASM="
 							},
-							"name": "following_user_id",
+							"name": "followed_id",
 							"type": "INTEGER",
 							"length": 0,
 							"foreignKey": true,

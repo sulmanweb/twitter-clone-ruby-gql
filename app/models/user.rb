@@ -26,6 +26,12 @@ class User < ApplicationRecord
   # @note: Relations
   has_many :sessions, dependent: :destroy
   has_many :tweets, dependent: :destroy
+  has_many :active_relationships, class_name: 'Follow', foreign_key: 'follower_id', dependent: :destroy,
+                                  inverse_of: :follower
+  has_many :followings, through: :active_relationships, source: :followed
+  has_many :passive_relationships, class_name: 'Follow', foreign_key: 'followed_id', dependent: :destroy,
+                                   inverse_of: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
 
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
@@ -42,6 +48,27 @@ class User < ApplicationRecord
   validates :website,
             length: { maximum: 160 },
             format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/, message: I18n.t('models.user.website_format') }, allow_blank: true
+
+  # @note: This method is used to check if the user is following another user.
+  # @param [User] other_user
+  # @return [Boolean]
+  def following?(other_user)
+    followings.include?(other_user)
+  end
+
+  # @note: This method is used to follow another user.
+  # @param [User] other_user
+  # @return [Follow]
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+
+  # @note: This method is used to unfollow another user.
+  # @param [User] other_user
+  # @return [Follow]
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
 
   private
 

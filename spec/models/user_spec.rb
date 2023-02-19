@@ -70,4 +70,44 @@ RSpec.describe User, type: :model do
       expect(user.profile_picture).not_to be_attached
     end
   end
+
+  describe 'following?' do
+    it 'returns true if the user is following another user' do
+      user = create(:user)
+      user2 = create(:user)
+      user.follow(user2)
+      expect(user.following?(user2)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
+    end
+  end
+
+  describe 'follow' do
+    it 'creates a new follow relationship' do
+      user = create(:user)
+      user2 = create(:user)
+      user.follow(user2)
+      expect(user.following?(user2)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
+    end
+  end
+
+  describe 'unfollow' do
+    it 'destroys a follow relationship' do
+      user = create(:user)
+      user2 = create(:user)
+      user.follow(user2)
+      user.unfollow(user2)
+      expect(user.following?(user2)).to be_falsey # rubocop:disable RSpec/PredicateMatcher
+    end
+  end
+
+  describe 'Follow system' do
+    it 'follows and unfollow a user' do
+      user1 = create(:user)
+      user2 = create(:user)
+      user1.follow(user2)
+      expect(user1.followings).to include(user2)
+      expect(user2.followers).to include(user1)
+      expect(user2.followings).not_to include(user1)
+      expect(user1.followers).not_to include(user2)
+    end
+  end
 end
