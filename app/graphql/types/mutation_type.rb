@@ -6,5 +6,7 @@ module Types
     field :sign_in, mutation: Mutations::SignIn, description: 'Sign in a user'
     field :sign_out, mutation: Mutations::SignOut, description: 'Sign out a user'
     field :sign_up, mutation: Mutations::SignUp, description: 'Sign up a new user'
+
+    field :create_tweet, mutation: Mutations::CreateTweet, description: 'Create a new tweet'
   end
 end

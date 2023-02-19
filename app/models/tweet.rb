@@ -25,6 +25,7 @@ class Tweet < ApplicationRecord
 
   # @note: Validations
   validates :text, presence: true, unless: :is_retweet?
+  validates :text, length: { minimum: 1, maximum: 240 }, unless: :is_retweet?
 
   # @note: The tweet is a reply if it has a reply_to_tweet_id
   # @return [Boolean]
