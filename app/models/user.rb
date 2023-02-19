@@ -25,6 +25,7 @@ class User < ApplicationRecord
 
   # @note: Relations
   has_many :sessions, dependent: :destroy
+  has_many :tweets, dependent: :destroy
 
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
