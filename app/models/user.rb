@@ -70,13 +70,6 @@ class User < ApplicationRecord
     end
   end
 
-  # @note: This method is used to unfollow another user.
-  # @param [User] other_user
-  # @return [Follow]
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
-  end
-
   private
 
   # @note: This method is used to validate the password only when it is present or when the user is being created.
