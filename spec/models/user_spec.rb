@@ -89,16 +89,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'unfollow' do
-    it 'destroys a follow relationship' do
-      user = create(:user)
-      user2 = create(:user)
-      user.follow(user2)
-      user.unfollow(user2)
-      expect(user.following?(user2)).to be_falsey # rubocop:disable RSpec/PredicateMatcher
-    end
-  end
-
   describe 'Follow system' do
     it 'follows and unfollow a user' do
       user1 = create(:user)

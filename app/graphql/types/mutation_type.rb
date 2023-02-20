@@ -10,5 +10,6 @@ module Types
     field :create_tweet, mutation: Mutations::CreateTweet, description: 'Create a new tweet'
 
     field :follow_user, mutation: Mutations::FollowUser, description: 'Follow a user'
+    field :un_follow_user, mutation: Mutations::UnFollowUser, description: 'Unfollow a user'
   end
 end
