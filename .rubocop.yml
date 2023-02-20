@@ -20,3 +20,5 @@ GraphQL/ExtractInputType:
   Enabled: false
 GraphQL/ExtractType:
   Enabled: false
+RSpec/NestedGroups:
+  Enabled: false

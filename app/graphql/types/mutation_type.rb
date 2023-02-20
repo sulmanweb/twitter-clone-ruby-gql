@@ -8,5 +8,7 @@ module Types
     field :sign_up, mutation: Mutations::SignUp, description: 'Sign up a new user'
 
     field :create_tweet, mutation: Mutations::CreateTweet, description: 'Create a new tweet'
+
+    field :follow_user, mutation: Mutations::FollowUser, description: 'Follow a user'
   end
 end

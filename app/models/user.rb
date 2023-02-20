@@ -58,9 +58,16 @@ class User < ApplicationRecord
 
   # @note: This method is used to follow another user.
   # @param [User] other_user
-  # @return [Follow]
+  # @return [Follow] || [Array]
   def follow(other_user)
-    active_relationships.create(followed_id: other_user.id)
+    return ['User could not be followed.'] if other_user.blank?
+
+    acrs = active_relationships.build(followed_id: other_user.id)
+    if acrs.save
+      acrs
+    else
+      acrs.errors.full_messages
+    end
   end
 
   # @note: This method is used to unfollow another user.
