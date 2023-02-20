@@ -22,3 +22,5 @@ GraphQL/ExtractType:
   Enabled: false
 RSpec/NestedGroups:
   Enabled: false
+RSpec/Focus:
+  Enabled: false
