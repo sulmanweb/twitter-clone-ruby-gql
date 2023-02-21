@@ -10,9 +10,9 @@ module Queries
     def resolve(user_id: nil)
       if user_id.present?
         user = User.find(user_id)
-        { success: true, tweets: user.tweets, errors: nil }
+        { success: true, tweets: user.tweets.order(id: :desc), errors: nil }
       else
-        { success: true, tweets: Tweet.all.includes(:user), errors: nil }
+        { success: true, tweets: Tweet.all.includes(:user).order(id: :desc), errors: nil }
       end
     end
   end

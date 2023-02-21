@@ -12,6 +12,12 @@ module Types
       field :username, String, null: false, description: 'The username of the user'
       field :website, String, null: true, description: 'The website of the user'
       # @todo: Add the profile picture field.
+
+      field :tweets, Types::Objects::TweetType.connection_type, null: true, description: 'The tweets of the user'
+
+      def tweets
+        object.tweets.order(id: :desc)
+      end
     end
   end
 end

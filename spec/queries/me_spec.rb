@@ -11,14 +11,24 @@ RSpec.describe Queries::Me, type: :request do
             id
             email
             username
+            tweets (first: 5) {
+              nodes {
+                id
+              }
+            }
           }
         }
       }
     GQL
   end
 
+  let(:user) { create(:user) }
+
+  before do
+    create_list(:tweet, 10, user:)
+  end
+
   context 'when the user is logged in' do
-    let(:user) { create(:user) }
     let(:headers) { sign_in_test_headers(user.sessions.create!) }
 
     it 'returns the current user' do
@@ -30,6 +40,7 @@ RSpec.describe Queries::Me, type: :request do
       expect(result[:data][:me][:user][:id]).to eq(user.id.to_s)
       expect(result[:data][:me][:user][:email]).to eq(user.email)
       expect(result[:data][:me][:user][:username]).to eq(user.username)
+      expect(result[:data][:me][:user][:tweets][:nodes].count).to eq(5)
     end
   end
 
