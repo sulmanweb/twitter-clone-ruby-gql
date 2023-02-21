@@ -16,6 +16,8 @@ RSpec.describe Queries::Me, type: :request do
                 id
               }
             }
+            followersCount
+            followingsCount
           }
         }
       }
@@ -23,9 +25,13 @@ RSpec.describe Queries::Me, type: :request do
   end
 
   let(:user) { create(:user) }
+  let(:user1) { create(:user) }
+  let(:user2) { create(:user) }
 
   before do
     create_list(:tweet, 10, user:)
+    user.active_relationships.create!(followed_id: user1.id)
+    user2.active_relationships.create!(followed_id: user.id)
   end
 
   context 'when the user is logged in' do
@@ -41,6 +47,8 @@ RSpec.describe Queries::Me, type: :request do
       expect(result[:data][:me][:user][:email]).to eq(user.email)
       expect(result[:data][:me][:user][:username]).to eq(user.username)
       expect(result[:data][:me][:user][:tweets][:nodes].count).to eq(5)
+      expect(result[:data][:me][:user][:followersCount]).to eq(1)
+      expect(result[:data][:me][:user][:followingsCount]).to eq(1)
     end
   end
 
