@@ -65,7 +65,7 @@ type DeleteTweetPayload {
   """
   An array of errors.
   """
-  errors: [String!]!
+  errors: [String!]
 
   """
   A boolean indicating if the tweet was deleted successfully.
@@ -120,7 +120,7 @@ type Me {
   """
   The errors that occurred
   """
-  errors: [String!]!
+  errors: [String!]
 
   """
   Whether the query was successful
@@ -209,6 +209,31 @@ type Mutation {
 }
 
 """
+Information about pagination in a connection.
+"""
+type PageInfo {
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
+
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+}
+
+"""
 The root query
 """
 type Query {
@@ -216,6 +241,16 @@ type Query {
   Get the current user
   """
   me: Me!
+
+  """
+  Get all tweets
+  """
+  tweetIndex(
+    """
+    The ID of the user
+    """
+    userId: ID
+  ): TweetIndex!
 }
 
 """
@@ -384,6 +419,81 @@ type Tweet {
 }
 
 """
+The connection type for Tweet.
+"""
+type TweetConnection {
+  """
+  A list of edges.
+  """
+  edges: [TweetEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [Tweet]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type TweetEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: Tweet
+}
+
+"""
+Get the current user
+"""
+type TweetIndex {
+  """
+  The errors that occurred
+  """
+  errors: [String!]
+
+  """
+  Whether the query was successful
+  """
+  success: Boolean!
+
+  """
+  Tweet collection
+  """
+  tweets(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): TweetConnection
+}
+
+"""
 The base input object for all input objects
 """
 input UnFollowUserInput {
@@ -433,6 +543,66 @@ type User {
   email: String!
 
   """
+  The followers of the user
+  """
+  followers(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): UserConnection
+
+  """
+  The number of followers of the user
+  """
+  followersCount: Int!
+
+  """
+  The followings of the user
+  """
+  followings(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): UserConnection
+
+  """
+  The number of followings of the user
+  """
+  followingsCount: Int!
+
+  """
   The id of the user
   """
   id: ID!
@@ -448,6 +618,31 @@ type User {
   name: String!
 
   """
+  The tweets of the user
+  """
+  tweets(
+    """
+    Returns the elements in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the elements in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the first _n_ elements from the list.
+    """
+    first: Int
+
+    """
+    Returns the last _n_ elements from the list.
+    """
+    last: Int
+  ): TweetConnection
+
+  """
   The username of the user
   """
   username: String!
@@ -456,4 +651,39 @@ type User {
   The website of the user
   """
   website: String
+}
+
+"""
+The connection type for User.
+"""
+type UserConnection {
+  """
+  A list of edges.
+  """
+  edges: [UserEdge]
+
+  """
+  A list of nodes.
+  """
+  nodes: [User]
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfo!
+}
+
+"""
+An edge in a connection.
+"""
+type UserEdge {
+  """
+  A cursor for use in pagination.
+  """
+  cursor: String!
+
+  """
+  The item at the end of the edge.
+  """
+  node: User
 }
