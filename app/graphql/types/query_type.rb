@@ -10,5 +10,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :me, resolver: Queries::Me, description: 'Get the current user'
+
+    field :tweet_index, resolver: Queries::TweetIndex, description: 'Get all tweets'
   end
 end
