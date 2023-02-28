@@ -22,6 +22,7 @@ class User < ApplicationRecord
   # @note: Entities
   has_secure_password
   has_one_attached :profile_picture
+  include PgSearch::Model
 
   # @note: Relations
   has_many :sessions, dependent: :destroy
@@ -48,6 +49,9 @@ class User < ApplicationRecord
   validates :website,
             length: { maximum: 160 },
             format: { with: /\A#{URI::DEFAULT_PARSER.make_regexp(%w[http https])}\z/, message: I18n.t('models.user.website_format') }, allow_blank: true
+
+  # @note: Scopes
+  pg_search_scope :search_by_username_or_name, against: %i[username name], using: { tsearch: { prefix: true } }
 
   # @note: This method is used to check if the user is following another user.
   # @param [User] other_user
