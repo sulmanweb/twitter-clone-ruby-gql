@@ -60,4 +60,32 @@ RSpec.describe Tweet, type: :model do
   it 'is valid without text if it is a retweet' do
     expect(build(:tweet, text: nil, is_retweet: true)).to be_valid
   end
+
+  describe 'scopes' do
+    describe '.search_by_text' do
+      let!(:tweet) { create(:tweet, text: 'This is a tweet') }
+
+      it 'returns tweets that match the search term' do
+        expect(described_class.search_by_text('tweet')).to include(tweet)
+      end
+
+      it 'does not return tweets that do not match the search term' do
+        expect(described_class.search_by_text('xx')).not_to include(tweet)
+      end
+
+      context 'when search is for a user only' do
+        let!(:user) { create(:user, username: 'test') }
+        let!(:tweet) { create(:tweet, text: 'This is a tweet', user:) }
+        let(:tweet2) { create(:tweet, text: 'xx') }
+
+        it 'returns tweets that match the search term' do
+          expect(user.tweets.search_by_text('tweet')).to include(tweet)
+        end
+
+        it 'does not return tweets that do not match the search term' do
+          expect(user.tweets.search_by_text('xx')).not_to include(tweet)
+        end
+      end
+    end
+  end
 end

@@ -100,4 +100,39 @@ RSpec.describe User, type: :model do
       expect(user1.followers).not_to include(user2)
     end
   end
+
+  describe 'search_by_username_or_name' do
+    context 'when the user exists' do
+      it 'returns the user' do
+        user = create(:user)
+        expect(described_class.search_by_username_or_name(user.username)).to eq([user])
+      end
+    end
+
+    context 'when the user does not exist' do
+      it 'returns an empty array' do
+        expect(described_class.search_by_username_or_name('sulman')).to eq([])
+      end
+    end
+
+    context 'when user exists in followings' do
+      it 'returns the user' do
+        user = create(:user)
+        user2 = create(:user)
+        create(:follow, follower: user, followed: user2)
+        expect(user.followings.search_by_username_or_name(user2.username)).to eq([user2])
+        expect(user.followers.search_by_username_or_name(user2.username)).to eq([])
+      end
+    end
+
+    context 'when user exists in followers' do
+      it 'returns the user' do
+        user = create(:user)
+        user2 = create(:user)
+        create(:follow, follower: user2, followed: user)
+        expect(user.followings.search_by_username_or_name(user2.username)).to eq([])
+        expect(user.followers.search_by_username_or_name(user2.username)).to eq([user2])
+      end
+    end
+  end
 end

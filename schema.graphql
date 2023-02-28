@@ -247,6 +247,11 @@ type Query {
   """
   tweetIndex(
     """
+    The query to search for tweets
+    """
+    query: String
+
+    """
     The ID of the user
     """
     userId: ID
@@ -565,6 +570,11 @@ type User {
     Returns the last _n_ elements from the list.
     """
     last: Int
+
+    """
+    The query to search for followers
+    """
+    query: String
   ): UserConnection
 
   """
@@ -595,6 +605,11 @@ type User {
     Returns the last _n_ elements from the list.
     """
     last: Int
+
+    """
+    The query to search for followings
+    """
+    query: String
   ): UserConnection
 
   """
@@ -640,6 +655,11 @@ type User {
     Returns the last _n_ elements from the list.
     """
     last: Int
+
+    """
+    The query to search for tweets
+    """
+    query: String
   ): TweetConnection
 
   """

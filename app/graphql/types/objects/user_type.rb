@@ -13,27 +13,45 @@ module Types
       field :website, String, null: true, description: 'The website of the user'
       # @todo: Add the profile picture field.
 
-      field :tweets, Types::Objects::TweetType.connection_type, null: true, description: 'The tweets of the user'
-
-      field :followers, Types::Objects::UserType.connection_type, null: true, description: 'The followers of the user'
-      field :followers_count, Integer, null: false, description: 'The number of followers of the user'
-      field :followings, Types::Objects::UserType.connection_type, null: true, description: 'The followings of the user'
-      field :followings_count, Integer, null: false, description: 'The number of followings of the user'
-
-      def tweets
-        object.tweets.order(id: :desc)
+      field :tweets, Types::Objects::TweetType.connection_type, null: true, description: 'The tweets of the user' do
+        argument :query, String, required: false, description: 'The query to search for tweets'
       end
 
-      def followers
-        object.followers.order(id: :desc)
+      field :followers, Types::Objects::UserType.connection_type, null: true, description: 'The followers of the user' do
+        argument :query, String, required: false, description: 'The query to search for followers'
+      end
+      field :followers_count, Integer, null: false, description: 'The number of followers of the user'
+      field :followings, Types::Objects::UserType.connection_type, null: true, description: 'The followings of the user' do
+        argument :query, String, required: false, description: 'The query to search for followings'
+      end
+      field :followings_count, Integer, null: false, description: 'The number of followings of the user'
+
+      def tweets(query: nil)
+        if query.present?
+          object.tweets.search_by_text(query)
+        else
+          object.tweets.order(id: :desc)
+        end
+      end
+
+      def followers(query: nil)
+        if query.present?
+          object.followers.search_by_username_or_name(query)
+        else
+          object.followers.order(id: :desc)
+        end
       end
 
       def followers_count
         object.followers.count
       end
 
-      def followings
-        object.followings.order(id: :desc)
+      def followings(query: nil)
+        if query.present?
+          object.followings.search_by_username_or_name(query)
+        else
+          object.followings.order(id: :desc)
+        end
       end
 
       def followings_count

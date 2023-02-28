@@ -20,12 +20,18 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class Tweet < ApplicationRecord
+  # @note: Entities
+  include PgSearch::Model
+
   # @note: Associations
   belongs_to :user
 
   # @note: Validations
   validates :text, presence: true, unless: :is_retweet?
   validates :text, length: { minimum: 1, maximum: 240 }, unless: :is_retweet?
+
+  # @note: Scopes
+  pg_search_scope :search_by_text, against: :text, using: { tsearch: { prefix: true } }
 
   # @note: The tweet is a reply if it has a reply_to_tweet_id
   # @return [Boolean]
