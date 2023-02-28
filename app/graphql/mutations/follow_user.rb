@@ -9,7 +9,7 @@ module Mutations
     field :success, Boolean, null: true, description: 'The success of the mutation'
 
     def resolve(user_id:)
-      Users::FollowService.call(user: context[:current_user], followed_user: User.find_by(id: user_id))
+      Users::FollowService.call(user: context[:current_user], followed_user_id: user_id)
     end
   end
 end

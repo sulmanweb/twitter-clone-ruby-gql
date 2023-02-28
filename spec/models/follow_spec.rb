@@ -38,7 +38,7 @@ RSpec.describe Follow, type: :model do
     it 'is invalid if the follower is already following the followed' do
       user1 = create(:user)
       user2 = create(:user)
-      user1.follow(user2)
+      create(:follow, follower: user1, followed: user2)
       expect(build(:follow, follower: user1, followed: user2)).not_to be_valid
     end
   end

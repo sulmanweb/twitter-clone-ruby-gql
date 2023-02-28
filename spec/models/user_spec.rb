@@ -75,7 +75,7 @@ RSpec.describe User, type: :model do
     it 'returns true if the user is following another user' do
       user = create(:user)
       user2 = create(:user)
-      user.follow(user2)
+      create(:follow, follower: user, followed: user2)
       expect(user.following?(user2)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
     end
   end
@@ -84,7 +84,7 @@ RSpec.describe User, type: :model do
     it 'creates a new follow relationship' do
       user = create(:user)
       user2 = create(:user)
-      user.follow(user2)
+      create(:follow, follower: user, followed: user2)
       expect(user.following?(user2)).to be_truthy # rubocop:disable RSpec/PredicateMatcher
     end
   end
@@ -93,7 +93,7 @@ RSpec.describe User, type: :model do
     it 'follows and unfollow a user' do
       user1 = create(:user)
       user2 = create(:user)
-      user1.follow(user2)
+      create(:follow, follower: user1, followed: user2)
       expect(user1.followings).to include(user2)
       expect(user2.followers).to include(user1)
       expect(user2.followings).not_to include(user1)

@@ -30,7 +30,7 @@ RSpec.describe Mutations::UnFollowUser, type: :request do
 
       context 'when the user is following the other user' do
         before do
-          user.follow(followed_user)
+          create(:follow, follower: user, followed: followed_user)
         end
 
         it 'returns success' do
