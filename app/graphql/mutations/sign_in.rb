@@ -11,12 +11,7 @@ module Mutations
     field :user, Types::Objects::UserType, null: true, description: 'The user'
 
     def resolve(username:, password:)
-      result = Users::SigninService.call(username:, password:)
-      {
-        auth_token: result.auth_token,
-        errors: result.errors,
-        user: result.user
-      }
+      Users::SigninService.call(username:, password:)
     end
   end
 end

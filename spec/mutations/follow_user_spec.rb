@@ -20,7 +20,7 @@ RSpec.describe Mutations::FollowUser, type: :request do
     context 'when the user is logged in' do
       context 'when the user is already following the other user' do
         before do
-          user.follow(followed_user)
+          create(:follow, follower: user, followed: followed_user)
         end
 
         it 'returns an error' do

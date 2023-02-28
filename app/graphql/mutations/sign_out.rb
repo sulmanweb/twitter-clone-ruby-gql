@@ -7,11 +7,7 @@ module Mutations
     field :success, Boolean, null: true, description: 'The success of the mutation'
 
     def resolve
-      result = Users::SignoutService.call(session: context[:current_session])
-      {
-        errors: result.errors,
-        success: result.success
-      }
+      Users::SignoutService.call(session: context[:current_session])
     end
   end
 end

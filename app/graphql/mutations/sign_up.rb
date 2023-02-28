@@ -13,12 +13,7 @@ module Mutations
     field :user, Types::Objects::UserType, null: true, description: 'The user'
 
     def resolve(username:, password:, email:, name:)
-      result = Users::SignupService.call(username:, password:, email:, name:)
-      {
-        auth_token: result.auth_token,
-        errors: result.errors,
-        user: result.user
-      }
+      Users::SignupService.call(username:, password:, email:, name:)
     end
   end
 end

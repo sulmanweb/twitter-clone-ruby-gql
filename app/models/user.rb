@@ -56,20 +56,6 @@ class User < ApplicationRecord
     followings.include?(other_user)
   end
 
-  # @note: This method is used to follow another user.
-  # @param [User] other_user
-  # @return [Follow] || [Array]
-  def follow(other_user)
-    return ['User could not be followed.'] if other_user.blank?
-
-    acrs = active_relationships.build(followed_id: other_user.id)
-    if acrs.save
-      acrs
-    else
-      acrs.errors.full_messages
-    end
-  end
-
   private
 
   # @note: This method is used to validate the password only when it is present or when the user is being created.
