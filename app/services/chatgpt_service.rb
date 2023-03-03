@@ -6,6 +6,7 @@
 # @example
 #   ChatgptService.call('What is your name?', 'gpt-3.5-turbo')
 #   => "\n\nI am an AI language model created by OpenAI, so I don't have a name. You can call me OpenAI or AI assistant."
+# API Docs: https://platform.openai.com/docs/api-reference/chat/create
 class ChatgptService
   include HTTParty
 
