@@ -6,9 +6,9 @@
 
 This is a GraphQL API for twitter clone. It is built with Ruby on Rails and GraphQL (Free). It is created by [Sulman Baig](https://sulmanweb.com).
 
-# Agile Board
+# How to add Issue to project
 
-- [Agile Board](https://github.com/users/sulmanweb/projects/5)
+You can submit an issue by filling the ClickUp [form](https://forms.clickup.com/36187224/f/12gb2r-8100/DOTF52BUNDCP0TC8XG).
 
 # License
 
