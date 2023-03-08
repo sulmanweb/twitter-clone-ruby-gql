@@ -33,6 +33,7 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: 'Follow', foreign_key: 'followed_id', dependent: :destroy,
                                    inverse_of: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :retweets, dependent: :destroy
 
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
