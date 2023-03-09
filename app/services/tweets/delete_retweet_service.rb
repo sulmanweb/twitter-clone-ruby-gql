@@ -1,14 +1,14 @@
 module Tweets
-  # @note: This service is used to create a new retweet.
-  # @param tweet_id [Integer] The tweet to be retweeted.
-  # @param user [User] The user who is creating the retweet.
+  # @note: This service is used to delete a retweet.
+  # @param tweet_id [Integer] The tweet to be unretweeted.
+  # @param user [User] The user who is deleting the retweet.
   # @return [Struct] A struct with the following attributes:
-  # - success [Boolean] A boolean indicating if the retweet was created successfully.
+  # - success [Boolean] A boolean indicating if the retweet was deleted successfully.
   # - errors [Array] An array of errors.
-  # - tweet [Tweet] The tweet created whose retweet to be created.
+  # - tweet [Tweet] The context tweet.
   # @example
-  #  Tweets::CreateRetweetService.new(tweet_id: tweet.id, user: current_user).call
-  class CreateRetweetService
+  #  Tweets::DeleteRetweetService.new(tweet_id: tweet.id, user: current_user).call
+  class DeleteRetweetService
     attr_reader :tweet_id, :user, :result
 
     def initialize(tweet_id:, user:)
@@ -21,13 +21,13 @@ module Tweets
       return result.new(false, ['You need to be logged in to perform this action.'], nil) if user.blank?
 
       tweet = Tweet.find_by(id: tweet_id)
-      return result.new(false, ['The tweet you are trying to retweet does not exist.'], nil) if tweet.blank?
+      return result.new(false, ['The tweet you are trying to unretweet does not exist.'], nil) if tweet.blank?
 
-      retweet = Retweet.new(tweet:, user:)
+      retweet = Retweet.find_by(tweet:, user:)
+      return result.new(false, ['You have not retweeted this tweet.'], nil) if retweet.blank?
 
-      if retweet.save
+      if retweet.destroy
         result.new(true, nil, tweet)
-        # @todo: Send a notification to the tweet owner
       else
         result.new(false, retweet.errors.full_messages, nil)
       end
