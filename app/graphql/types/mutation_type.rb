@@ -14,5 +14,6 @@ module Types
     field :un_follow_user, mutation: Mutations::UnFollowUser, description: 'Unfollow a user'
 
     field :create_retweet, mutation: Mutations::CreateRetweet, description: 'Create a new retweet'
+    field :remove_retweet, mutation: Mutations::RemoveRetweet, description: 'Remove a retweet'
   end
 end
