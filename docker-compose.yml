@@ -1,0 +1,28 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=twitter_clone_ruby_gql_development
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  api:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && foreman start -f Procfile"
+    stdin_open: true
+    tty: true
+    environment:
+      - EDITOR=nano
+      - PGHOST=db
+      - PGUSER=postgres
+    volumes:
+      - .:/var/www/twitter-clone-ruby-gql
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
