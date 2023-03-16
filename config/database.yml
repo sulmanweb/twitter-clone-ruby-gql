@@ -26,7 +26,6 @@ development:
   database: twitter_clone_ruby_gql_development
   username: postgres
   password: password
-  host: localhost
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -63,7 +62,6 @@ test:
   database: twitter_clone_ruby_gql_test
   username: postgres
   password: password
-  host: localhost
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

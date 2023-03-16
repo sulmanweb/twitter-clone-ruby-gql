@@ -1,0 +1,6 @@
+alias dcbe='docker compose run --rm api bundle exec $*'
+alias rubocop='dcbe rubocop -A'
+alias rspec='dcbe rspec $*'
+alias console='dcbe rails console'
+alias db='dcbe rails db:drop db:create db:migrate db:seed'
+alias gql='dcbe rails graphql:schema:idl'

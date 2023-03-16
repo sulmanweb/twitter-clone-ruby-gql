@@ -21,9 +21,7 @@ jobs:
         image: postgres
         ports: ["5432:5432"]
         env:
-          POSTGRES_DB: twitter_clone_ruby_gql_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -40,11 +38,19 @@ jobs:
         run: sudo apt-get -yqq install libpq-dev
       - name: Setup Database
         working-directory: ${{env.api-dir}}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
         run: bin/rails db:create db:schema:load
       - name: Build and test with rspec
         working-directory: ${{env.api-dir}}
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
         run: bundle exec rspec spec
 
   lint:
@@ -57,9 +63,7 @@ jobs:
         image: postgres
         ports: ["5432:5432"]
         env:
-          POSTGRES_DB: twitter_clone_ruby_gql_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_HOST_AUTH_METHOD: trust
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -76,9 +80,17 @@ jobs:
         run: sudo apt-get -yqq install libpq-dev
       - name: Setup Database
         working-directory: ${{env.api-dir}}
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
         run: bin/rails db:create db:schema:load
       - name: Check Rubocop Styles
         working-directory: ${{env.api-dir}}
         env:
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
         run: bundle exec rubocop
