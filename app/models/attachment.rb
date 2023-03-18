@@ -15,8 +15,6 @@
 #
 #  fk_rails_...  (tweet_id => tweets.id)
 #
-require 'mime/types'
-# @note: Active Storage Attachment Model
 class Attachment < ApplicationRecord
   # @note: Active Storage macro
   has_one_attached :file
