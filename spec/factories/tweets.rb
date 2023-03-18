@@ -41,5 +41,11 @@ FactoryBot.define do
         reply_to_tweet_id { tweet.id }
       end
     end
+
+    trait :with_attachment do
+      after(:create) do |tweet|
+        FactoryBot.create(:attachment, :with_file, tweet_id: tweet.id)
+      end
+    end
   end
 end
