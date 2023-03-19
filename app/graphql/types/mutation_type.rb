@@ -9,6 +9,7 @@ module Types
 
     field :create_tweet, mutation: Mutations::CreateTweet, description: 'Create a new tweet'
     field :delete_tweet, mutation: Mutations::DeleteTweet, description: 'Delete a tweet'
+    field :like_tweet, mutation: Mutations::LikeTweet, description: 'Like a tweet'
     field :like_unlike_tweet, mutation: Mutations::LikeUnlikeTweet, description: 'Like or unlike a tweet'
 
     field :follow_user, mutation: Mutations::FollowUser, description: 'Follow a user'
