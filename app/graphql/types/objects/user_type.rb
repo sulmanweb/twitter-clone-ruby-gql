@@ -29,6 +29,9 @@ module Types
       field :retweet_count, Integer, null: false, description: 'The number of retweets of the user'
       field :retweets, Types::Objects::RetweetType.connection_type, null: true, description: 'The retweets of the user'
 
+      field :likes, Types::Objects::LikeType.connection_type, null: true, description: 'The likes of the user'
+      field :likes_count, Integer, null: false, description: 'The number of likes of the user'
+
       def tweets(query: nil)
         if query.present?
           object.tweets.search_by_text(query)
@@ -67,6 +70,14 @@ module Types
 
       def retweets
         object.retweets.order(id: :desc)
+      end
+
+      def likes_count
+        object.likes.count
+      end
+
+      def likes
+        object.likes.order(id: :desc)
       end
     end
   end
