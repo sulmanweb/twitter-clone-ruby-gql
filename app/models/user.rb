@@ -35,6 +35,7 @@ class User < ApplicationRecord
   has_many :followers, through: :passive_relationships, source: :follower
   has_many :retweets, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :mentions, dependent: :destroy
 
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
