@@ -1,7 +1,7 @@
 module Types
   module Objects
     # @note: LikeType
-    class LikeType < Types::Objects::BaseObject
+    class LikeType < Types::BaseObject
       description 'LikeType'
 
       field :id, ID, null: false, description: 'ID'
