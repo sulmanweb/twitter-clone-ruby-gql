@@ -1088,6 +1088,11 @@ type User {
   name: String!
 
   """
+  The profile picture of the user
+  """
+  profilePictureUrl: String
+
+  """
   The number of retweets of the user
   """
   retweetCount: Int!
