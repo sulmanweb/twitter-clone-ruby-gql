@@ -28,10 +28,14 @@ class Tweet < ApplicationRecord
   has_many :retweets, dependent: :destroy
   has_many :attachments, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :mentions, dependent: :destroy
 
   # @note: Validations
   validates :text, presence: true, unless: :is_retweet?
   validates :text, length: { minimum: 1, maximum: 240 }, unless: :is_retweet?
+
+  # @note: Callbacks
+  after_create :add_mentions_for_tweet
 
   # @note: Scopes
   pg_search_scope :search_by_text, against: :text, using: { tsearch: { prefix: true } }
@@ -40,5 +44,9 @@ class Tweet < ApplicationRecord
   # @return [Boolean]
   def reply?
     reply_to_tweet_id.present?
+  end
+
+  def add_mentions_for_tweet
+    Tweets::AddMentionsForTweet.call(tweet: self)
   end
 end
