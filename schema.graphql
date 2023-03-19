@@ -818,6 +818,11 @@ type Tweet {
   isRetweet: Boolean!
 
   """
+  A boolean indicating if the tweet is liked by the current user
+  """
+  likedByMe: Boolean!
+
+  """
   The likes of the tweet
   """
   likes(

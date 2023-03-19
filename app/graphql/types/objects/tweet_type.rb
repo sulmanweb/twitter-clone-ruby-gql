@@ -18,6 +18,8 @@ module Types
       field :likes, Types::Objects::LikeType.connection_type, null: true, description: 'The likes of the tweet'
       field :likes_count, Integer, null: false, description: 'The number of likes of the tweet'
 
+      field :liked_by_me, Boolean, null: false, description: 'A boolean indicating if the tweet is liked by the current user'
+
       def retweet_count
         object.retweets.count
       end
@@ -32,6 +34,12 @@ module Types
 
       def likes
         object.likes.order(id: :desc)
+      end
+
+      def liked_by_me
+        return true if context[:current_user].present? && object.likes.where(user: context[:current_user]).present?
+
+        false
       end
     end
   end
