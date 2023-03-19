@@ -32,6 +32,8 @@ module Types
       field :likes, Types::Objects::LikeType.connection_type, null: true, description: 'The likes of the user'
       field :likes_count, Integer, null: false, description: 'The number of likes of the user'
 
+      field :profile_picture_url, String, null: true, description: 'The profile picture of the user'
+
       def tweets(query: nil)
         if query.present?
           object.tweets.search_by_text(query)
@@ -78,6 +80,13 @@ module Types
 
       def likes
         object.likes.order(id: :desc)
+      end
+
+      def profile_picture_url
+        # @todo: Return the profile picture url for production.
+        return Rails.application.routes.url_helpers.rails_blob_url(object.profile_picture, only_path: true) if object.profile_picture.attached?
+
+        nil
       end
     end
   end
