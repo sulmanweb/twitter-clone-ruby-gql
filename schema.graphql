@@ -315,7 +315,7 @@ type Mutation {
     Parameters for LikeUnlikeTweet
     """
     input: LikeUnlikeTweetInput!
-  ): LikeUnlikeTweetPayload
+  ): LikeUnlikeTweetPayload @deprecated(reason: "likeUnlikeTweet is deprecated. Use likeTweet or unlikeTweet instead.")
 
   """
   Remove a retweet
