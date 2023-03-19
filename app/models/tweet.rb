@@ -27,6 +27,7 @@ class Tweet < ApplicationRecord
   belongs_to :user
   has_many :retweets, dependent: :destroy
   has_many :attachments, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   # @note: Validations
   validates :text, presence: true, unless: :is_retweet?
