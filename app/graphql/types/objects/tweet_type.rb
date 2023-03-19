@@ -4,6 +4,7 @@ module Types
     class TweetType < Types::BaseObject
       description 'A tweet'
 
+      field :attachments, Types::Objects::AttachmentType.connection_type, null: true, description: 'The attachments of the tweet', method: :attachments
       field :created_at, GraphQL::Types::ISO8601DateTime, null: false, description: 'The creation date of the tweet'
       field :id, ID, null: false, description: 'The id of the tweet'
       field :is_reply, Boolean, null: false, description: 'A boolean indicating if the tweet is a reply', method: :reply?
