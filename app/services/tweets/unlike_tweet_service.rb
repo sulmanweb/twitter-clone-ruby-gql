@@ -1,14 +1,14 @@
 module Tweets
-  # @note: This is the service that will be used to like a tweet.
-  # @param tweet_id [Integer] The id of the tweet to be liked.
-  # @param user [User] The user that is liking the tweet.
+  # @note: This is the service that will be used to unlike a tweet.
+  # @param tweet_id [Integer] The id of the tweet to unlike.
+  # @param user [User] The user that is unliking the tweet.
   # @return [Struct] A struct with the result of the operation.
-  # - success [Boolean] A boolean indicating if the operation was successful.
-  # - errors [Array] An array of errors.
-  # - tweet [Tweet] The tweet that was liked.
-  # @example
-  #   Tweets::LikeTweetService.call(tweet_id: 1, user: current_user)
-  class LikeTweetService
+  # - success [Boolean] Whether the operation was successful or not.
+  # - errors [Array<String>] An array of errors if the operation was not successful.
+  # - tweet [Tweet] The tweet that was unliked.
+  # @example: Unlike a tweet
+  #   Tweets::UnlikeTweetService.call(tweet_id: 1, user: current_user)
+  class UnlikeTweetService
     attr_reader :tweet_id, :user, :result
 
     def initialize(tweet_id:, user:)
@@ -23,11 +23,12 @@ module Tweets
       tweet = Tweet.find_by(id: tweet_id)
       return result.new(false, ['Tweet not found.'], nil) if tweet.blank?
 
-      liked = tweet.likes.build(user:)
-      if liked.save
+      liked = tweet.likes.find_by(user:)
+      if liked
+        liked.destroy
         result.new(true, nil, tweet)
       else
-        result.new(false, liked.errors.full_messages, nil)
+        result.new(false, ['You have not liked this tweet.'], nil)
       end
     end
 

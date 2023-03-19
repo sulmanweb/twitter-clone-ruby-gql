@@ -11,6 +11,7 @@ module Types
     field :delete_tweet, mutation: Mutations::DeleteTweet, description: 'Delete a tweet'
     field :like_tweet, mutation: Mutations::LikeTweet, description: 'Like a tweet'
     field :like_unlike_tweet, mutation: Mutations::LikeUnlikeTweet, description: 'Like or unlike a tweet'
+    field :unlike_tweet, mutation: Mutations::UnlikeTweet, description: 'Unlike a tweet'
 
     field :follow_user, mutation: Mutations::FollowUser, description: 'Follow a user'
     field :un_follow_user, mutation: Mutations::UnFollowUser, description: 'Unfollow a user'
