@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_19_065542) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_19_100432) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_065542) do
     t.index ["followed_id"], name: "index_follows_on_followed_id"
     t.index ["follower_id", "followed_id"], name: "index_follows_on_follower_id_and_followed_id", unique: true
     t.index ["follower_id"], name: "index_follows_on_follower_id"
+  end
+
+  create_table "hash_tags", force: :cascade do |t|
+    t.bigint "tweet_id", null: false
+    t.string "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tweet_id", "tag"], name: "index_hash_tags_on_tweet_id_and_tag", unique: true
+    t.index ["tweet_id"], name: "index_hash_tags_on_tweet_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -129,6 +138,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_19_065542) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "attachments", "tweets"
+  add_foreign_key "hash_tags", "tweets"
   add_foreign_key "likes", "tweets"
   add_foreign_key "likes", "users"
   add_foreign_key "mentions", "tweets"

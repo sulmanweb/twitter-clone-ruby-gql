@@ -29,6 +29,7 @@ class Tweet < ApplicationRecord
   has_many :attachments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :mentions, dependent: :destroy
+  has_many :hash_tags, dependent: :destroy
 
   # @note: Validations
   validates :text, presence: true, unless: :is_retweet?
@@ -36,6 +37,7 @@ class Tweet < ApplicationRecord
 
   # @note: Callbacks
   after_create :add_mentions_for_tweet
+  after_create :add_hash_tags_for_tweet
 
   # @note: Scopes
   pg_search_scope :search_by_text, against: :text, using: { tsearch: { prefix: true } }
@@ -48,5 +50,9 @@ class Tweet < ApplicationRecord
 
   def add_mentions_for_tweet
     Tweets::AddMentionsForTweet.call(tweet: self)
+  end
+
+  def add_hash_tags_for_tweet
+    Tweets::AddHashTagsForTweet.call(tweet: self)
   end
 end
