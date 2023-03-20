@@ -135,4 +135,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'blocklists' do
+    context 'when user is blocked' do
+      it 'returns the user' do
+        user = create(:user)
+        user2 = create(:user)
+        blocklist = create(:blocklist, user:, blocked_user: user2)
+        expect(user.blocklists).to eq([blocklist])
+        expect(user.blocked_users).to eq([user2])
+        expect(user2.blockers).to eq([user])
+      end
+    end
+  end
 end
