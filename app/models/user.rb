@@ -36,6 +36,10 @@ class User < ApplicationRecord
   has_many :retweets, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :mentions, dependent: :destroy
+  has_many :blocklists, dependent: :destroy
+  has_many :blocked_users, through: :blocklists, source: :blocked_user
+  has_many :blocked_by_users, class_name: 'Blocklist', foreign_key: 'blocked_user_id', dependent: :destroy, inverse_of: :blocked_user
+  has_many :blockers, through: :blocked_by_users, source: :user
 
   # @note: Validations
   validates :username, presence: true, uniqueness: true, length: { minimum: 4, maximum: 20 },
