@@ -8,7 +8,7 @@ This is a GraphQL API for twitter clone. It is built with Ruby on Rails and Grap
 
 # How to add Issue to project
 
-You can submit an issue by filling the ClickUp [form](https://forms.clickup.com/36187224/f/12gb2r-8100/DOTF52BUNDCP0TC8XG).
+You can submit any issue with code at [GitHub Issues](https://github.com/sulmanweb/twitter-clone-ruby-gql/issues).
 
 # License
 
