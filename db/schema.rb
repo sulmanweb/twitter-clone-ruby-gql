@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_20_004250) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_25_022016) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -118,6 +118,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_004250) do
     t.index ["active"], name: "index_sessions_on_active"
     t.index ["token"], name: "index_sessions_on_token", unique: true
     t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
+  create_table "trends", force: :cascade do |t|
+    t.string "name"
+    t.bigint "tweet_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_trends_on_name"
+    t.index ["tweet_count"], name: "index_trends_on_tweet_count"
   end
 
   create_table "tweets", force: :cascade do |t|
